@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 const App = () => {
@@ -71,7 +71,7 @@ const App = () => {
         </button>
         {}
         {!currentAccount && (
-          <button className="waveButton" onClick={connectionWallet}>
+          <button className="waveButton" onClick={connectWallet}>
             Connect Wallet
           </button>
         )}
