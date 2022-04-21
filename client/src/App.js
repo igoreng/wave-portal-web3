@@ -5,6 +5,7 @@ import abi from "./utils/WavePortal.json";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [miningStatus, setMiningStatus] = useState(false);
 
   const contractAddress = "0x87A6D7Cc5136dd981535830D2DCdc07323de0082";
 
@@ -72,9 +73,11 @@ const App = () => {
         console.log("Retrivied total wave count...", count.toNumber());
 
         const waveTxn = await wavePortalContract.wave();
+        setMiningStatus(false);
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
+        setMiningStatus(true);
         console.log("Mined --", waveTxn.hash);
 
         count = await wavePortalContract.getTotalWaves();
@@ -101,10 +104,12 @@ const App = () => {
           I am Igor and I am learning how to make a web3 app because of my final
           college paper. In Brazil we call it TCC.
         </div>
-
-        <button className="waveButton" onClick={wave}>
-          Wave at Me
-        </button>
+        {"Miner is working!"}
+        {miningStatus && (
+          <button className="waveButton" onClick={wave}>
+            Wave at Me
+          </button>
+        )}
         {}
         {!currentAccount && (
           <button className="waveButton" onClick={connectWallet}>
