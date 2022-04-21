@@ -73,11 +73,11 @@ const App = () => {
         console.log("Retrivied total wave count...", count.toNumber());
 
         const waveTxn = await wavePortalContract.wave();
-        setMiningStatus(false);
+        setMiningStatus(true);
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
-        setMiningStatus(true);
+        setMiningStatus(false);
         console.log("Mined --", waveTxn.hash);
 
         count = await wavePortalContract.getTotalWaves();
@@ -104,6 +104,7 @@ const App = () => {
           I am Igor and I am learning how to make a web3 app because of my final
           college paper. In Brazil we call it TCC.
         </div>
+        {miningStatus && <p>Wait! The miner is working!</p>}
         {!miningStatus && (
           <button className="waveButton" onClick={wave}>
             Wave at Me
