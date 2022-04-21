@@ -7,7 +7,7 @@ const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [miningStatus, setMiningStatus] = useState(false);
 
-  const contractAddress = "0x87A6D7Cc5136dd981535830D2DCdc07323de0082";
+  const contractAddress = "0x3F98FAAda94CB80518741A8b0732F9d70ee8e4a4";
 
   const contractABI = abi.abi;
 
