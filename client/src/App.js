@@ -104,7 +104,6 @@ const App = () => {
           I am Igor and I am learning how to make a web3 app because of my final
           college paper. In Brazil we call it TCC.
         </div>
-        {"Miner is working!"}
         {miningStatus && (
           <button className="waveButton" onClick={wave}>
             Wave at Me
