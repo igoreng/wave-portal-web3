@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import abi from "./utils/WavePortal.json";
 
 const App = () => {
-  /*
-   * Just a state variable we use to store our user's public wallet.
-   */
   const [currentAccount, setCurrentAccount] = useState("");
+
+  const contractAddress = "0x87A6D7Cc5136dd981535830D2DCdc07323de0082";
+
+  const contractABI = abi.abi;
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -52,6 +54,39 @@ const App = () => {
     }
   };
 
+  const wave = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const wavePortalContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
+
+        let count = await wavePortalContract.getTotalWaves();
+        console.log("Retrivied total wave count...", count.toNumber());
+
+        const waveTxn = await wavePortalContract.wave();
+        console.log("Mining...", waveTxn.hash);
+
+        await waveTxn.wait();
+        console.log("Mined --", waveTxn.hash);
+
+        count = await wavePortalContract.getTotalWaves();
+
+        console.log("Retrieved total wave count...", count.toNumber());
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
@@ -66,7 +101,7 @@ const App = () => {
           college paper. In Brazil we call it TCC.
         </div>
 
-        <button className="waveButton" onClick={null}>
+        <button className="waveButton" onClick={wave}>
           Wave at Me
         </button>
         {}
